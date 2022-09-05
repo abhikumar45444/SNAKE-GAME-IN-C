@@ -4,21 +4,19 @@
 #include<windows.h>
 #include<conio.h>
 
-
-
 // Constants and Macros
 #define ROWS 25
 #define COLUMNS 100
 #define clear() printf("\033[H\033[J")
 #define gotoxy(x,y) printf("\033[%d;%dH", (y), (x))
 
-// Move up X lines
+// Move up X lines, 1 -> means move up 1 line
 #define UP    printf("\033[1A")
-// Move down X lines 
+// Move down X lines, 1 -> means move down 1 line
 #define DOWN     printf("\033[1C") 
-// Move right X column
+// Move right X column , 1 -> means move right 1 column
 #define RIGHT     printf("\033[1D") 
-// Move left X column
+// Move left X column, 1 -> means move left 1 column
 #define LEFT    printf("\033[1B") 
 
 // Global Declarations      
@@ -28,6 +26,7 @@ int posX = 20, posY = 20;  // intial position starts at (0,0) and (1,1)  and is 
                              //point D of board position is (1,26)  //point C of board position is (100,26) 
 char playerinput;
 char inputchecker;
+
 // Functions Declarations
 void Border();
 void Snake(int posX, int posY);
@@ -45,43 +44,7 @@ int main()
 
     while((_kbhit() && (input = getch())) || i++ != n )
     {
-
-           playerinput = input;
-             
-            // ________ INPUT TESTING _________
-            // for(; i <= 23;)
-            // {
-            //    if(i >= 1 && i <= 5)
-            //    {
-            //          input = 'w';
-            //          playerinput = input;
-                     
-            //          break;
-            //    }
-            //    else if(i >= 6 && i <= 11)
-            //    {
-            //          input = 's';
-            //           playerinput = input;
-                      
-            //    break;
-            //    }
-            //    else if(i >=12 && i <= 17)
-            //    {
-            //          input = 'd';
-            //          playerinput = input;
-                     
-            //    break;
-            //    }
-            //    else if(i >=18 && i <= 23)
-            //    {
-            //          input = 'a';
-            //          playerinput = input;
-                    
-            //    break;
-            //    }  
-            // }
-
-            //printf("%c", playerinput);
+            playerinput = input;
             if(playerinput == 'w')
             {
                if(posY == 2) break;
@@ -130,10 +93,10 @@ int main()
                 if(posX == 1) break;
                  
                 if(inputchecker == 'w' || inputchecker == 's'){
-                LEFT;
-                 posX--;
-                Snake(posX, posY);
-                 inputchecker = playerinput;
+                  LEFT;
+                  posX--;
+                  Snake(posX, posY);
+                  inputchecker = playerinput;
                 }
                  else if(inputchecker == 'a')
                 { 
@@ -151,10 +114,10 @@ int main()
                  if(posX == 100) break;
 
                  if(inputchecker == 'w' || inputchecker == 's'){
-                RIGHT;
-                 posX++;
-                Snake(posX, posY);
-                 inputchecker = playerinput;
+                   RIGHT;
+                   posX++;
+                   Snake(posX, posY);
+                   inputchecker = playerinput;
                  }
                   else if(inputchecker == 'd')
                 { 
@@ -167,7 +130,6 @@ int main()
                  posX--;
                }
             }
-            //posY++;
             else
             {
               Snake(posX, posY);
@@ -175,11 +137,8 @@ int main()
              }
      }
 
-     GameOver();
-
-    
+    GameOver();
     printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
- 
     return 0;
 }
 
@@ -207,7 +166,7 @@ void GameOver()
         }
         printf("\n");
     }
-    //gotoxy(46,13);
+
     int x = 36,y = 11;
     gotoxy(x,y);
      for (int i = 1; i <= 5; i++)
@@ -229,7 +188,8 @@ void GameOver()
         gotoxy(x,y);
     }
     
-    gotoxy(46,13);
+    // Moves cursor to X,Y position to print gaveover screen
+    gotoxy(46,13);          
     printf("GAME OVER\n");
 }
 
@@ -265,8 +225,6 @@ void Border()
 
 void Snake(int posXX, int posYY)
 {
-   // system("cls");
-   
     char snake = '#';
     gotoxy(posXX, posYY);
     printf("%c", snake);
